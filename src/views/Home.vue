@@ -1,18 +1,21 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  div
+    Shelf(v-if="books" :books="books")
+    p(v-if="books") {{ books }}
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Shelf from '@/components/Shelf.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    Shelf
+  },
+  computed: {
+    books() {
+      return this.$store.getters.getBooks
+    }
   }
 }
 </script>
