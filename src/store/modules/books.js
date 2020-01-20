@@ -12,6 +12,10 @@ const getters = {
 
 const mutations = {
   async fetchBooks(state) {
+    let favoriteBooks = []
+    if (typeof Storage !== 'undefined') {
+      favoriteBooks = window.localStorage.getItem('favoriteBooks') || []
+    }
     await axios
       .get('https://ancient-springs-73658.herokuapp.com/categories')
       .then(function(response) {
@@ -20,7 +24,11 @@ const mutations = {
         categories.forEach(category => {
           books.push({
             category: category.title,
-            books: getBooksData(category.title, category.book_ids)
+            books: getBooksData(
+              favoriteBooks,
+              category.title,
+              category.book_ids
+            )
           })
         })
         console.log(books)
@@ -42,7 +50,7 @@ const actions = {
   }
 }
 
-function getBooksData(categoryTitle, bookIds) {
+function getBooksData(favoriteBooks, categoryTitle, bookIds) {
   const tiltedBook = randomTiltedBook(bookIds)
   let books = []
   bookIds.forEach((bookId, index) => {
@@ -52,6 +60,15 @@ function getBooksData(categoryTitle, bookIds) {
         let bookData = response.data
         if (tiltedBook === index) {
           bookData.tilted = true
+        }
+        if (favoriteBooks.length > 0) {
+          let favoriteBooksData = JSON.parse(favoriteBooks)
+          const index = favoriteBooksData.indexOf(bookId)
+          if (index >= 0) {
+            bookData.favorite = true
+          } else {
+            bookData.favorite = false
+          }
         }
         bookData.category_title = categoryTitle.toLowerCase()
         books.push(bookData)

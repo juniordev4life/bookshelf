@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Books</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
@@ -12,7 +12,19 @@
 export default {
   name: 'home',
   mounted() {
-    this.$store.dispatch('fetchBooks')
+    this.$store.dispatch('fetchBooks', { vm: this })
+    if (typeof Storage !== 'undefined') {
+      let favoriteBooks = window.localStorage.getItem('favoriteBooks')
+      favoriteBooks = JSON.parse(favoriteBooks)
+      if (favoriteBooks === null) {
+        window.localStorage.setItem('favoriteBooks', JSON.stringify([]))
+      } else {
+        window.localStorage.setItem(
+          'favoriteBooks',
+          JSON.stringify(favoriteBooks)
+        )
+      }
+    }
   }
 }
 </script>

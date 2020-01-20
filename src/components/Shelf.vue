@@ -1,8 +1,8 @@
 <template lang="pug">
   .c-shelf
-    .c-shelf__category(v-for="(category,index) in books" :key="index")
+    .c-shelf__category(v-for="(category,categoryIndex) in books" :key="categoryIndex")
       .c-shelf__category-title {{ category.category }}
-      Book(:bookdata="book" v-for="(book, index) in category.books" :key="index" :tilted="isTilted(book)")
+      Book(:bookdata="book" v-for="(book, bookIndex) in category.books" :key="bookIndex" :tilted="isTilted(book)" :categoryIndex="categoryIndex" :bookIndex="bookIndex")
 </template>
 
 <script>
@@ -37,9 +37,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $brown: #a87328;
-$darkblue: #0c347d;
-$umber: #54290c;
-$springer: #eded80;
 html {
   height: 100%;
 }
