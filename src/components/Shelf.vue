@@ -37,16 +37,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $brown: #a87328;
-html {
-  height: 100%;
-}
-
-body {
-  background-color: #aaacb5;
-}
 
 .c-shelf {
-  width: 80%;
+  width: 50%;
   height: 100%;
   margin: 0 auto;
   border: 10px $brown solid;
@@ -62,7 +55,6 @@ body {
     darken($brown, 4%) 280px
   );
   background-size: 10px 280px;
-  box-shadow: 0px 1000px 0px 400px #7a7668;
 }
 
 .c-shelf__category {
@@ -79,7 +71,11 @@ body {
   color: white;
   font-size: 20px;
   font-style: italic;
-  border-left: 1px solid #aaacb5;
-  border-right: 1px solid #aaacb5;
+}
+
+@media (max-device-width: 1024px) {
+  .c-shelf {
+    width: 80%;
+  }
 }
 </style>

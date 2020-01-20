@@ -1,12 +1,24 @@
 <template lang="pug">
-  .c-book(:class="['c-book--' + bookdata.category_title, tilted]")
-    h2(@click="showDetails(categoryIndex, bookIndex, bookdata.id)") {{ bookdata.title }}
-    span(:class="{ 'c-book--favorite': true, 'c-book--favorite-full': bookdata.favorite }" @click="updateFavoriteBooks(categoryIndex, bookIndex, bookdata.id)")
+  div.modal-container
+    Modal(v-model="detailOpen" :content="bookdata.content" :image="bookdata.image_url" :title="bookdata.title")
+    .c-book(:class="['c-book--' + bookdata.category_title, tilted]")
+      h2(@click="showDetails(bookdata.content, bookdata.image_url)") {{ bookdata.title }}
+      span(:class="{ 'c-book--favorite': true, 'c-book--favorite-full': bookdata.favorite }" @click="updateFavoriteBooks(categoryIndex, bookIndex, bookdata.id)")
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue'
+
 export default {
   name: 'Book',
+  data() {
+    return {
+      detailOpen: false
+    }
+  },
+  components: {
+    Modal
+  },
   props: {
     bookdata: {
       type: Object,
@@ -64,9 +76,8 @@ export default {
         console.log('LocalStorage not supported!')
       }
     },
-    showDetails(categoryIndex, bookIndex, bookId) {
-      let books = this.$store.getters.getBooks
-      console.log(books[categoryIndex].books[bookIndex].content)
+    showDetails() {
+      this.detailOpen = !this.detailOpen
     }
   }
 }
