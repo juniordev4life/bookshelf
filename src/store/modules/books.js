@@ -20,7 +20,7 @@ const mutations = {
         categories.forEach(category => {
           books.push({
             category: category.title,
-            books: getBooksData(category.book_ids)
+            books: getBooksData(category.title, category.book_ids)
           })
         })
         console.log(books)
@@ -42,13 +42,19 @@ const actions = {
   }
 }
 
-function getBooksData(bookIds) {
+function getBooksData(categoryTitle, bookIds) {
+  const tiltedBook = randomTiltedBook(bookIds)
   let books = []
-  bookIds.forEach(bookId => {
+  bookIds.forEach((bookId, index) => {
     axios
       .get(`https://ancient-springs-73658.herokuapp.com/books/${bookId}`)
       .then(function(response) {
-        books.push(response.data)
+        let bookData = response.data
+        if (tiltedBook === index) {
+          bookData.tilted = true
+        }
+        bookData.category_title = categoryTitle.toLowerCase()
+        books.push(bookData)
       })
       .catch(function(error) {
         // handle error
@@ -56,6 +62,10 @@ function getBooksData(bookIds) {
       })
   })
   return books
+}
+
+function randomTiltedBook(books) {
+  return Math.floor(Math.random() * Math.floor(books.length))
 }
 
 export default {

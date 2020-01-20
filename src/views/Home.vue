@@ -1,7 +1,5 @@
 <template lang="pug">
-  div
-    Shelf(v-if="books" :books="books")
-    p(v-if="books") {{ books }}
+  Shelf(v-if="books" :books="books")
 </template>
 
 <script>

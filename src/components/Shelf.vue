@@ -1,8 +1,8 @@
 <template lang="pug">
   .c-shelf
     .c-shelf__category(v-for="(category,index) in books" :key="index")
-      p {{ category.category }}
-      Book(:title="book.title" v-for="(book, index) in category.books" :key="index")
+      .c-shelf__category-title {{ category.category }}
+      Book(:bookdata="book" v-for="(book, index) in category.books" :key="index" :tilted="isTilted(book)")
 </template>
 
 <script>
@@ -24,8 +24,11 @@ export default {
     }
   },
   methods: {
-    randomBookColor() {
-      return '#' + ((Math.random() * 0xffffff) << 0).toString(16)
+    isTilted(book) {
+      if (book.tilted) {
+        return 'c-book--tilted'
+      }
+      return ''
     }
   }
 }
@@ -53,19 +56,33 @@ body {
   overflow: hidden;
   background-image: linear-gradient(
     darken($brown, 32%),
-    darken($brown, 30%) 220px,
-    lighten($brown, 4%) 220px,
-    lighten($brown, 4%) 222px,
+    darken($brown, 30%) 270px,
+    lighten($brown, 4%) 270px,
+    lighten($brown, 4%) 272px,
     $brown 222px,
     $brown 228px,
-    darken($brown, 4%) 228px,
-    darken($brown, 4%) 230px
+    darken($brown, 4%) 278px,
+    darken($brown, 4%) 280px
   );
-  background-size: 10px 230px;
+  background-size: 10px 280px;
   box-shadow: 0px 1000px 0px 400px #7a7668;
 }
 
 .c-shelf__category {
-  display: block;
+  position: relative;
+  display: flex;
+  padding-top: 30px;
+}
+
+.c-shelf__category-title {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: $brown;
+  color: white;
+  font-size: 20px;
+  font-style: italic;
+  border-left: 1px solid #aaacb5;
+  border-right: 1px solid #aaacb5;
 }
 </style>
