@@ -73,7 +73,7 @@ export default {
           })
         })
       } else {
-        console.log('LocalStorage not supported!')
+        throw new Error('LocalStorage not supported!')
       }
     },
     showDetails() {

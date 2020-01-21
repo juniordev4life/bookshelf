@@ -31,12 +31,10 @@ const mutations = {
             )
           })
         })
-        console.log(books)
         state.books = books
       })
       .catch(function(error) {
-        // handle error
-        console.log(error)
+        throw new Error(error)
       })
   },
   getBooks: state => {
@@ -74,8 +72,7 @@ function getBooksData(favoriteBooks, categoryTitle, bookIds) {
         books.push(bookData)
       })
       .catch(function(error) {
-        // handle error
-        console.log(error)
+        throw new Error(error)
       })
   })
   return books
