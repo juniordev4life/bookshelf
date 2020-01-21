@@ -44,6 +44,7 @@ export default {
   position: fixed;
   top: 10%;
   height: 30%;
+  min-height: 400px;
   background-color: rgba(255, 255, 255, 1);
   width: 60%;
   left: 20%;

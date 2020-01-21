@@ -1,4 +1,5 @@
 <template lang="pug">
+
   Shelf(v-if="books" :books="books")
 </template>
 
@@ -7,6 +8,11 @@ import Shelf from '@/components/Shelf.vue'
 
 export default {
   name: 'home',
+  data() {
+    return {
+      coverView: true
+    }
+  },
   components: {
     Shelf
   },

@@ -1,7 +1,10 @@
 <template lang="pug">
   div.modal-container
     Modal(v-model="detailOpen" :content="bookdata.content" :image="bookdata.image_url" :title="bookdata.title")
-    .c-book(:class="['c-book--' + bookdata.category_title, tilted]")
+    .c-book.c-book--cover(v-if="coverView")
+      img.c-book__cover-image(:src="bookdata.image_url" @click="showDetails(bookdata.content, bookdata.image_url)")
+      span(:class="{ 'c-book--favorite': true, 'c-book--favorite-full': bookdata.favorite }" @click="updateFavoriteBooks(categoryIndex, bookIndex, bookdata.id)")
+    .c-book(v-else :class="['c-book--' + bookdata.category_title, tilted]")
       h2(@click="showDetails(bookdata.content, bookdata.image_url)") {{ bookdata.title }}
       span(:class="{ 'c-book--favorite': true, 'c-book--favorite-full': bookdata.favorite }" @click="updateFavoriteBooks(categoryIndex, bookIndex, bookdata.id)")
 </template>
@@ -34,6 +37,10 @@ export default {
     },
     bookIndex: {
       type: Number,
+      required: true
+    },
+    coverView: {
+      type: Boolean,
       required: true
     }
   },
@@ -93,7 +100,7 @@ $color-science: #81d2c7;
 .c-book {
   height: 220px;
   width: 40px;
-  float: left;
+  flex: 0 1;
   color: white;
   font-size: 0.9em;
   font-family: Verdana, sans-serif;
@@ -155,7 +162,6 @@ $color-science: #81d2c7;
   display: inline-block;
   height: 15px;
   margin: 0 10px;
-  position: relative;
   bottom: 10px;
   transform: rotate(-45deg);
   width: 15px;
@@ -189,5 +195,35 @@ $color-science: #81d2c7;
 .c-book--favorite-full:after {
   background-color: red;
   opacity: 1;
+}
+
+.c-book--cover {
+  height: 220px;
+  width: 180px;
+  flex: 0 1;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  position: relative;
+
+  .c-book--favorite {
+    right: 15px;
+    left: auto;
+    top: 10px;
+  }
+
+  .c-book--favorite-full,
+  .c-book--favorite-full:before,
+  .c-book--favorite-full:after {
+    background-color: red;
+    opacity: 1;
+  }
+}
+
+.c-book__cover-image {
+  width: 165px;
+  height: 220px;
+  border: 1px solid #ddd;
 }
 </style>
