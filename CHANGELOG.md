@@ -1,3 +1,17 @@
+### 1.1.0 (2020-01-22)
+
+##### New Features
+
+*  add cover view (e0aef162)
+
+##### Bug Fixes
+
+*  better error handling (26c9238f)
+
+##### Other Changes
+
+*  change projectname and page title (19ff4489)
+
 ## 1.0.0 (2020-01-21)
 
 ##### Chores
